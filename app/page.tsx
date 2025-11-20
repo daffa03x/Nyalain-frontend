@@ -3,7 +3,11 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Search, User, Home, Wallet, FileText, Mail, ChevronRight, BadgeCheck, HeartHandshake, Megaphone, Trophy, Users } from 'lucide-react';
+import { User, Home, Wallet, FileText, ChevronRight, BadgeCheck, BadgeQuestionMark } from 'lucide-react';
+import Header from './components/organism/Header/page';
+import Hero from './components/organism/Hero/page';
+import quick from './data/quick';
+import QuickAction from './components/organism/QuickAction/page';
 
 /**
  * Komponen utama untuk halaman beranda (Home) aplikasi donasi.
@@ -80,18 +84,6 @@ const HomePage = () => {
       image: "https://images.unsplash.com/photo-1601581987809-a874a81309c9?w=400&h=300&fit=crop",
       progress: 30
     }
-  ];
-
-  /** Mock data untuk menu "Aksi Cepat" (Quick Actions) */
-  const quickActions = [
-    { name: 'Donasi', icon: '💰', color: 'bg-gradient-to-br from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300' },
-    { name: 'Zakat', icon: '🕌', color: 'bg-gradient-to-br from-emerald-100 to-emerald-200 hover:from-emerald-200 hover:to-emerald-300' },
-    { name: 'Galang Dana', icon: '💼', color: 'bg-gradient-to-br from-[#e6fff9] to-[#c0fff1] hover:from-[#c0fff1] hover:to-[#a0fded]' },
-    { name: 'Donasi Otomatis', icon: '🔄', color: 'bg-gradient-to-br from-violet-100 to-violet-200 hover:from-violet-200 hover:to-violet-300' },
-    { name: 'Kitabisa Experience', icon: '🎁', color: 'bg-gradient-to-br from-pink-100 to-pink-200 hover:from-pink-200 hover:to-pink-300' },
-    { name: 'Kolaborasi CSR', icon: '🤝', color: 'bg-gradient-to-br from-orange-100 to-orange-200 hover:from-orange-200 hover:to-orange-300' },
-    { name: 'Asuransi SalingJaga', icon: '🛡️', color: 'bg-gradient-to-br from-red-100 to-red-200 hover:from-red-200 hover:to-red-300' },
-    { name: 'Dana Abadi', icon: '🌱', color: 'bg-gradient-to-br from-lime-100 to-lime-200 hover:from-lime-200 hover:to-lime-300' }
   ];
 
   /** Mock data untuk "Special Banner Carousel" */
@@ -194,107 +186,13 @@ const HomePage = () => {
     <div className="max-w-md mx-auto bg-white min-h-screen pb-20">
       
       {/* Header Section (Search Bar) */}
-      <div className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
-        <div className="px-5 py-3">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-            <input
-              type="text"
-              placeholder='Coba cari "Tolong menolong"'
-              className="w-full bg-gray-100 pl-12 pr-4 py-2.5 rounded-full text-sm 
-                         text-gray-800 placeholder-gray-500
-                         focus:outline-none focus:ring-2 focus:ring-[#00FFC6] 
-                         border border-transparent focus:border-[#00FFC6]"
-            />
-          </div>
-        </div>
-      </div>
+      <Header />
 
       {/* Hero Section */}
-      <div className="relative w-full h-[450px] sm:h-[500px] overflow-hidden">
-        {/* Gambar Latar Belakang */}
-        <Image
-          src="/hero.png"
-          alt="Komunitas crowdfunding sedang berinteraksi"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-        {/* Overlay gelap */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/70"></div>
-
-        {/* Konten Hero (Judul & Tombol CTA) */}
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 pb-24">
-          <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight mb-4 drop-shadow-lg">
-            Satu Aksi Kecil, Dampak Besar
-          </h1>
-          <p className="text-lg sm:text-xl font-medium mb-8 max-w-md drop-shadow-md">
-            Bergabunglah dengan jutaan #OrangBaik lain, wujudkan harapan.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button 
-              className="w-full sm:w-auto bg-white text-[#00806e] font-bold px-6 py-2.5 rounded-full flex items-center justify-center gap-2 text-base shadow-xl transition-all duration-300 hover:scale-105 hover:bg-gray-100"
-            >
-              <HeartHandshake size={20} />
-              Donasi Sekarang
-            </button>
-            <button className="w-full sm:w-auto bg-transparent border-2 border-white text-white font-bold px-6 py-2.5 rounded-full flex items-center justify-center gap-2 text-base shadow-lg transition-all duration-300 hover:scale-105 hover:bg-white/10">
-              <Megaphone size={20} />
-              Mulai Galang Dana
-            </button>
-          </div>
-        </div>
-        
-        {/* Kartu Statistik (Keberhasilan & Dampak) */}
-        <div className="absolute bottom-4 left-4 right-4 z-20">
-          <div className="bg-white/15 backdrop-blur-md rounded-2xl p-4 border border-white/20 shadow-xl">
-            <div className="flex items-center justify-around">
-              <div className="text-white text-center flex flex-col items-center gap-1">
-                <div className="flex items-center gap-1.5">
-                  <Trophy size={14} className="opacity-80" />
-                  <span className="text-xs opacity-80">Kampanye Tuntas</span>
-                </div>
-                <p className="text-2xl font-bold drop-shadow-md">1.240</p>
-              </div>
-              <div className="h-10 w-px bg-white/20"></div>
-              <div className="text-white text-center flex flex-col items-center gap-1">
-                <div className="flex items-center gap-1.5">
-                  <Users size={14} className="opacity-80" />
-                  <span className="text-xs opacity-80">Penerima Manfaat</span>
-                </div>
-                <p className="text-2xl font-bold drop-shadow-md">4.500+</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Hero />
 
       {/* Quick Actions (Bubble Menu) */}
-      <div className="px-4 py-6">
-        <h2 className="font-bold text-gray-900 mb-5 text-lg">
-          Mau berbuat baik apa hari ini?
-        </h2>
-        <div className="grid grid-cols-4 gap-4">
-          {quickActions.map((action, index) => (
-            <button 
-              key={index} 
-              className="flex flex-col items-center gap-2.5 group transition-all duration-300 hover:-translate-y-1"
-            >
-              <div 
-                className={`${action.color} w-16 h-16 rounded-full flex items-center justify-center 
-                           transition-all duration-300 shadow-lg shadow-gray-900/10 group-hover:shadow-xl`}
-              >
-                <div className="text-3xl opacity-90">
-                  {action.icon}
-                </div>
-              </div>
-              <span className="text-xs text-center font-semibold text-gray-700 leading-tight">
-                {action.name}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <QuickAction Quick={quick} />
 
       {/* Urgent Campaigns Section */}
       <div className="px-4 py-6">
@@ -539,15 +437,15 @@ const HomePage = () => {
             <div className="overflow-hidden rounded-lg group">
               <Image 
                 src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=100&h=100&fit=crop" 
-                alt="Tentang Kitabisa" 
+                alt="Tentang Nyalain" 
                 width={80}
                 height={80}
                 className="object-cover transition-transform duration-500 group-hover:scale-110" 
               />
             </div>
             <div>
-              <h3 className="font-bold text-gray-800 mb-1">Tentang Kitabisa</h3>
-              <p className="text-xs text-gray-600">Pelajari mengenai pengelolaan dan dampak donasi via Kitabisa</p>
+              <h3 className="font-bold text-gray-800 mb-1">Tentang Nyalain</h3>
+              <p className="text-xs text-gray-600">Pelajari mengenai pengelolaan dan dampak donasi via Nyalain</p>
               <button 
                 className="text-[#00806e] hover:text-[#006e5e] text-xs font-semibold mt-1 flex items-center gap-1 transition-all hover:gap-2"
               >
@@ -559,10 +457,10 @@ const HomePage = () => {
       </div>
 
       {/* Footer Section */}
-      <div className="px-4 py-5 bg-gradient-to-b from-white to-gray-50 text-center text-xs text-gray-600">
-        <p className="mb-3">Berdiri sejak 2013, Kitabisa memiliki izin Penggumpulan Uang dan Barang dari Kemensos. Kitabisa rutin diaudit dengan status Wajar Tanpa Pengecualian (WTP).</p>
+      <div className="px-4 py-5 bg-linear-to-b from-white to-gray-50 text-center text-xs text-gray-600">
+        <p className="mb-3">Berdiri sejak 2013, Nyalain memiliki izin Penggumpulan Uang dan Barang dari Kemensos. Nyalain rutin diaudit dengan status Wajar Tanpa Pengecualian (WTP).</p>
         <div className="flex justify-center gap-4 mb-4 flex-wrap">
-          <a href="#" className="text-gray-600 hover:text-[#00806e] transition-colors">Tentang Kitabisa</a>
+          <a href="#" className="text-gray-600 hover:text-[#00806e] transition-colors">Tentang Nyalain</a>
           <span>|</span>
           <a href="#" className="text-gray-600 hover:text-[#00806e] transition-colors">Syarat & Ketentuan</a>
           <span>|</span>
@@ -575,7 +473,7 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-        <p className="text-gray-500">Copyright © 2025 Kitabisa. All Rights Reserved</p>
+        <p className="text-gray-500">Copyright © 2025 Nyalain. All Rights Reserved</p>
       </div>
 
       {/* Bottom Navigation Bar */}
@@ -600,9 +498,9 @@ const HomePage = () => {
           
           {/* Tombol Navigasi: Galang Dana */}
           <button
-            onClick={() => setActiveTab('galang')}
+            onClick={() => setActiveTab('galang-dana')}
             className={`flex flex-col items-center gap-1.5 py-3 transition-all duration-300 rounded-lg ${
-              activeTab === 'galang' 
+              activeTab === 'galang-dana' 
                 ? 'text-[#00806e]' 
                 : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
             }`}
@@ -624,17 +522,17 @@ const HomePage = () => {
             <span className="text-xs font-medium">Donasi Saya</span>
           </button>
           
-          {/* Tombol Navigasi: Inbox */}
+          {/* Tombol Navigasi: FAQ */}
           <button
-            onClick={() => setActiveTab('inbox')}
+            onClick={() => setActiveTab('faq')}
             className={`flex flex-col items-center gap-1.5 py-3 transition-all duration-300 rounded-lg ${
-              activeTab === 'inbox' 
+              activeTab === 'faq' 
                 ? 'text-[#00806e]' 
                 : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
             }`}
           >
-            <Mail size={24} strokeWidth={2} />
-            <span className="text-xs font-medium">Inbox</span>
+            <BadgeQuestionMark size={24} strokeWidth={2} />
+            <span className="text-xs font-medium">FAQ</span>
           </button>
           
           {/* Tombol Navigasi: Akun */}
